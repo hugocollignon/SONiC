@@ -78,6 +78,8 @@ https://www.amazon.fr/gp/product/B077VXV323/
 At this date (20221110), the size of the flash is not automatically discovered for this device. We will enable this feature by hand. To do this, we have to edit `boot0` file but it is located in two places.
 
 - Get the SONiC image you want
+  - On https://github.com/sonic-net/SONiC/wiki/Supported-Devices-and-Platforms, you can find the link to pipelines: https://sonic-build.azurewebsites.net/ui/sonic/Pipelines
+  - Follow Platform: `broadcom` > BranchName: `your choice` > Builds: `Build History` > Result: `last succeeded build` > Artifacts: `Artifacts` > Name: `sonic-buildimage.broadcom` > Name: `target/sonic-aboot-broadcom.swi`
 - Extract `.sonic-boot.swi` and `boot0` from the downloaded file  
 ```
 unzip sonic-aboot-broadcom.swi .sonic-boot.swi boot0
@@ -278,6 +280,18 @@ Debian GNU/Linux 11 sonic ttyS0
 sonic login: [  311.224810] arista: waiting for switch chip
 [  311.475814] arista: switch chip is ready
 [  313.524978] arista: yielding...
+```
+
+## openssh issue
+
+You may encounter an issue when `sshd` tries to start: `[FAILED] Failed to start OpenBSD Secure Shell server.`.
+
+Can be solved with:
+
+```
+sudo apt remove openssh-client openssh-server
+sudo apt update
+sudo apt install openssh-server
 ```
 
 # Source
